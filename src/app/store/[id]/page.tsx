@@ -1,6 +1,6 @@
 // /app/store/[id]/page.tsx
 import { products } from '@/data/products'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -8,6 +8,13 @@ type Props = {
   params: {
     id: string
   }
+}
+
+// Ez kötelező a dinamikus route-hoz!
+export async function generateStaticParams() {
+  return products.map((product) => ({
+    id: product.id.toString(),
+  }))
 }
 
 export default function ProductDetailPage({ params }: Props) {
@@ -30,8 +37,9 @@ export default function ProductDetailPage({ params }: Props) {
           <h1 className="text-3xl font-bold">{product.name}</h1>
           <p className="text-gray-700 text-lg">{product.description}</p>
           <p className="text-xl font-semibold text-blue-600">${product.price}</p>
-          <p className="text-sm line-through text-gray-400">${product.originalPrice}</p>
-
+          {product.originalPrice && (
+            <p className="text-sm line-through text-gray-400">${product.originalPrice}</p>
+          )}
           <Link
             href="/cart"
             className="inline-block mt-4 bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition"
