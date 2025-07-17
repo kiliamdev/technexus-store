@@ -1,13 +1,8 @@
+
 import { products } from '@/data/products'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-
-export async function generateStaticParams() {
-  return products.map((product) => ({
-    id: product.id.toString(),
-  }))
-}
 
 export default function ProductDetailPage({ params }: { params: { id: string } }) {
   const product = products.find((p) => p.id === Number(params.id))
@@ -32,6 +27,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
           {product.originalPrice && (
             <p className="text-sm line-through text-gray-400">${product.originalPrice}</p>
           )}
+
           <Link
             href="/cart"
             className="inline-block mt-4 bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition"
