@@ -1,23 +1,15 @@
-// /app/store/[id]/page.tsx
 import { products } from '@/data/products'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 
-type Props = {
-  params: {
-    id: string
-  }
-}
-
-// Ez kötelező a dinamikus route-hoz!
 export async function generateStaticParams() {
   return products.map((product) => ({
     id: product.id.toString(),
   }))
 }
 
-export default function ProductDetailPage({ params }: Props) {
+export default function ProductDetailPage({ params }: { params: { id: string } }) {
   const product = products.find((p) => p.id === Number(params.id))
 
   if (!product) return notFound()
