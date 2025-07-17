@@ -1,8 +1,4 @@
-// /components/ProductCard.tsx
-import Link from 'next/link'
 import Image from 'next/image'
-
-// components/ProductCard.tsx
 
 type Product = {
   id: number
@@ -10,33 +6,42 @@ type Product = {
   price: number
   originalPrice?: number
   image: string
-  onView?: () => void
+  category?: string
+  description: string
+  onView: () => void
 }
 
-export default function ProductCard({ id, name, price, originalPrice, image, onView }: Product) {
+export default function ProductCard({
+  name,
+  price,
+  originalPrice,
+  image,
+  onView,
+}: Product) {
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
-      <div className="relative w-full h-60">
+    <div className="bg-white p-4 rounded-xl shadow flex flex-col items-center transition hover:scale-105">
+      <div className="relative w-full h-48 mb-3">
         <Image
           src={image}
           alt={name}
           fill
-          className="object-contain p-4"
+          className="object-contain rounded"
+          sizes="300px"
         />
       </div>
-      <div className="p-4 flex flex-col gap-2">
-        <h3 className="font-semibold text-lg">{name}</h3>
-        <p className="text-blue-600 font-bold">${price}</p>
+      <h2 className="text-lg font-bold mb-2 text-center">{name}</h2>
+      <div className="flex gap-2 items-center justify-center">
+        <span className="text-blue-600 font-semibold text-xl">${price}</span>
         {originalPrice && (
-          <p className="text-sm line-through text-gray-400">${originalPrice}</p>
+          <span className="text-sm line-through text-gray-400">${originalPrice}</span>
         )}
-        <button
-          onClick={onView}
-          className="mt-2 bg-black text-white text-sm px-4 py-2 rounded hover:bg-gray-800 transition"
-        >
-          View Product
-        </button>
       </div>
+      <button
+        onClick={onView}
+        className="mt-4 w-full bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition"
+      >
+        View Product
+      </button>
     </div>
   )
 }
